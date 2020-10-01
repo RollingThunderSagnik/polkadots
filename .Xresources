@@ -96,3 +96,6 @@ URxvt.urlButton:                  1
 *.color13:                        magenta1
 *.color14:                        cyan1
 *.color15:                        white1
+
+URxvt.keysym.Control-Shift-C:     perl:clipboard:copy
+URxvt.keysym.Control-Shift-V:     perl:clipboard:paste
