@@ -40,6 +40,8 @@ URxvt.keysym.Control-Next:        perl:tabbedex:next_tab
 URxvt.keysym.Control-Prior:       perl:tabbedex:prev_tab
 URxvt.keysym.Control-Shift-Next:  perl:tabbedex:move_tab_right
 URxvt.keysym.Control-Shift-Prior: perl:tabbedex:move_tab_left
+URxvt.keysym.Control-Shift-C:     perl:clipboard:copy
+URxvt.keysym.Control-Shift-V:     perl:clipboard:paste
 
 URxvt.clipboard.copycmd:          xclip -i -selection clipboard
 URxvt.clipboard.pastecmd:         xclip -o -selection clipboard
@@ -97,5 +99,3 @@ URxvt.urlButton:                  1
 *.color14:                        cyan1
 *.color15:                        white1
 
-URxvt.keysym.Control-Shift-C:     perl:clipboard:copy
-URxvt.keysym.Control-Shift-V:     perl:clipboard:paste

@@ -28,9 +28,9 @@ sed -i '5s_colorschemes/.*.rasi_colorschemes/fullscreen-dark.rasi_' ~/.config/ro
 sed -i '5s_colorschemes/.*.rasi_colorschemes/sidebar-dark.rasi_' ~/.config/rofi/themes/sidebar/colors.rasi
 
 # Set Openbox Margin
-sed -i '130s_<left>.*_<left>55</left>_' ~/.config/openbox/rc.xml
-sed -i '129s_<bottom>.*_<bottom>10</bottom>_' ~/.config/openbox/rc.xml
-sed -i '128s_<top>.*_<top>10</top>_' ~/.config/openbox/rc.xml
+sed -i '130s_<left>.*_<left>45</left>_' ~/.config/openbox/rc.xml
+sed -i '129s_<bottom>.*_<bottom>0</bottom>_' ~/.config/openbox/rc.xml
+sed -i '128s_<top>.*_<top>0</top>_' ~/.config/openbox/rc.xml
 
 # Set Openbox Titlebar Font Size
 sed -i '50s_<size.*_<size>10</size>_' ~/.config/openbox/rc.xml
