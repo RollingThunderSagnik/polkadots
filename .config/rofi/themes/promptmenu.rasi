@@ -1,8 +1,3 @@
-/**
- * Awesome pull request from ekaunt
- * https://github.com/owl4ce/dotfiles/pull/2
- */
- 
 @import "sidebar/colors.rasi"
 
 * {
@@ -12,32 +7,20 @@
 
   option-6-listview-spacing:            30px;
 
-/*menu-window-padding:                  6px 6px 6px 30px;
-  menu-prompt-padding:                  15px 20px 15px 20px;
+  // top right bottom left
+  menu-window-padding:                  6px 6px 6px 30px;
+  menu-prompt-padding:                  10px 20px 15px 20px;
   menu-prompt-margin:                   0px;
   menu-element-border:                  0px 10px 0px 10px;
-  menu-element-padding:                 0px 0px 0px 0px;*/
-
-  // top right bottom left
-  menu-window-padding:                  0px 6px 6px 34px;
-  menu-prompt-padding:                  10px 0px 0px 0px;
-  menu-prompt-margin:                   0px;
-  menu-element-border:                  0px 0px 0px 0px;
-  menu-element-padding:                 20px 30px 20px 10px;
-  option-element-padding:   0px 0px 0px 0px;
-  /*menu-element-padding:                 14px 6px 6px -50px;*/
+  menu-element-padding:                 27px 16px 21px 0px;
 }
 
-/* ########### */
-
 #window {
-  width: 235px;
-  height: 148px;
+  width: 230px;
+  height: 147px;
   location: center;
   border: 0px;
 }
-
-/* ########### */
 
 * {
   background-color: @background;
@@ -48,45 +31,51 @@
 #horibox {
   children: [ listview ];
 }
+
 #listview {
   layout: horizontal;
 }
+
 #element {
   border: 0px;
   padding: @option-element-padding;
   background-color: @background-light;
+  border-radius: 8px;
 }
+
 #element.selected {
   background-color: @accent;
   text-color: @background;
 }
 
-/* ########### */
-
 * {
   font: @text-font;
   location: center;
 }
+
 #window {
   padding: @menu-window-padding;
   children: [ inputbar, horibox ];
 }
+
 #inputbar {
   children: [ prompt ];
   margin: @menu-inputbar-margin;
 }
+
 #listview {
   spacing: @option-6-listview-spacing;
   lines: 2;
 }
+
 prompt {
   padding: @menu-prompt-padding;
 }
+
 #prompt {
   margin: @menu-prompt-margin;
-  background-color: @background-light;
+  background-color: @background;
   text-color: @accent;
-  padding: 20px 0px 20px 13px;
 }
 
 #element {
@@ -106,15 +95,18 @@ element.selected.urgent {
   text-color: @background;
   border-color: @on;
 }
+
 element.selected.urgent {
   border-color: @accent;
 }
+
 element.urgent,
 element.selected.active {
   background-color: @off;
   text-color: @background;
   border-color: @off;
 }
+
 element.selected.active {
   border-color: @accent;
 }

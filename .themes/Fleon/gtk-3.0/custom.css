@@ -9,12 +9,13 @@
 }
 
 .text-button:checked {
-  background: #373E4D;
+  background: #141414;
   border-radius: 6px;
 }
 
 .text-button:hover {
-  color: #CF8EF4;
+  color: #F9F9F9;
+  /* #8ed3f5; */
   transition: 0.3s;
 }
 
@@ -29,17 +30,17 @@
 }
 
 .image-button:hover {
-  background: #56687E;
+  background: #232323;
   transition: 0.3s;
 }
 
 .image-button:checked {
   color: #F9F9F9;
-  background: #373E4D;
+  background: #141414;
 }
 
 .image-button:disabled {
-  color: #56687E;
+  color: #232323;
 }
 
 .titlebar {
@@ -62,9 +63,9 @@ padding: 20px;
   border-style: none;
 }
 
-.thunar .sidebar {
-    background-image:url("../gtk-assets/thunar-sidebar.png");
-}
+/* .thunar .sidebar { */
+    /* background-image:url("../gtk-assets/thunar-sidebar.png"); */
+/* } */
 
 .thunar .sidebar .view {
     color: #F9F9F9;

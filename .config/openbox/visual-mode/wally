@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-
-# Wallpaper changer for Mechanical Theme and Eyecandy Theme and both Minimal Mode
-
+source $HOME/.owl4ce_var
 clear
 
 # Colored output
@@ -11,21 +9,15 @@ GREEN='\033[1;32m'
 MAGENTA='\033[1;35m'
 NC='\033[0m' # No Color
 
-dir=~/.wallpaper
-icon="~/.icons/gladient/wally.png"
-
-current="$(cat ~/.config/openbox/visual-mode/current)"
-chkmin="$(cat ~/.config/openbox/visual-mode/current | grep 'minimal')"
-
-if [[ $chkmin == *"minimal"* ]]; then
-
-    if [[ $current == *"mechanical"* ]]; then
-        echo -e "${CYAN}Select wallpaper for Mechanical Theme [Minimal]:"
+if [[ $CHK_MINMOD = *"minimal"* ]]; then
+    if [[ $CHK_VISMOD = *"mechanical"* ]]; then
+        echo -e "${CYAN}Select wallpaper for Minimal Mechanical Theme:"
         n=0
-        for img in $dir/mechanical/*
+        for img in $WALL_DIR/*
         do
             n=$((n+1))
-            printf "${MAGENTA}[%s] ${NC}%s\n" "$n" "$img"
+            imgfilt="$(echo $img | grep -oE '[^/]+$' $1)"
+            printf "${MAGENTA}[${CYAN}%s${MAGENTA}] ${NC}%s\n" "$n" "$imgfilt"
             eval "img${n}=\$img"
         done
         
@@ -35,7 +27,8 @@ if [[ $chkmin == *"minimal"* ]]; then
             exit
         fi
         
-        printf '\nEnter File Index ID (1 to %s): ' "$n"
+        printf "${CYAN}---${NC}"
+        printf "\nEnter File Index ID ${MAGENTA}[${CYAN}1${MAGENTA}] ${NC}to ${MAGENTA}[${CYAN}%s${MAGENTA}]${NC}: " "$n"
         read -n 1 -r num
         num=$(printf '%s\n' "$num" | tr -dc '[:digit:]')
         
@@ -49,20 +42,21 @@ if [[ $chkmin == *"minimal"* ]]; then
             
             # Write selected
             selected="$(echo "$IMG" | awk -F'mechanical/' '{print $2}')"
-            echo "$selected" > ~/.config/openbox/visual-mode/mechanical/wall-minimal
+            echo "$selected" > $MINMOD_WALL_FILE
             
-            printf "\n${CYAN}Selected wallpaper: ${NC}$(cat ~/.config/openbox/visual-mode/eyecandy/wall-minimal)\n"
+            printf "\n${CYAN}Selected wallpaper: ${NC}$selected\n"
             
             # Notify success
-            notify-send -u low -i $icon "Wallpaper" "Applied: <u>$(cat ~/.config/openbox/visual-mode/mechanical/wall-minimal)</u>"
+            notify-send -u low -i $NOTIF_WALLY_ICON "Wallpaper" "Applied: <u>$selected</u>"
         fi
     else
-        echo -e "${CYAN}Select wallpaper for Eyecandy Theme [Minimal]:"
+        echo -e "${CYAN}Select wallpaper for Minimal Eyecandy Theme:"
         n=0
-        for img in $dir/eyecandy/*
+        for img in $WALL_DIR/*
         do
             n=$((n+1))
-            printf "${MAGENTA}[%s] ${NC}%s\n" "$n" "$img"
+            imgfilt="$(echo $img | grep -oE '[^/]+$' $1)"
+            printf "${MAGENTA}[${CYAN}%s${MAGENTA}] ${NC}%s\n" "$n" "$imgfilt"
             eval "img${n}=\$img"
         done
 
@@ -72,7 +66,8 @@ if [[ $chkmin == *"minimal"* ]]; then
             exit
         fi
 
-        printf '\nEnter File Index ID (1 to %s): ' "$n"
+        printf "${CYAN}---${NC}"
+        printf "\nEnter File Index ID ${MAGENTA}[${CYAN}1${MAGENTA}] ${NC}to ${MAGENTA}[${CYAN}%s${MAGENTA}]${NC}: " "$n"
         read -n 1 -r num
         num=$(printf '%s\n' "$num" | tr -dc '[:digit:]')
 
@@ -86,24 +81,23 @@ if [[ $chkmin == *"minimal"* ]]; then
             
             # Write selected
             selected="$(echo "$IMG" | awk -F'eyecandy/' '{print $2}')"
-            echo "$selected" > ~/.config/openbox/visual-mode/eyecandy/wall-minimal
+            echo "$selected" > $MINMOD_WALL_FILE
             
-            printf "\n${CYAN}Selected wallpaper: ${NC}$(cat ~/.config/openbox/visual-mode/eyecandy/wall-minimal)\n"
+            printf "\n${CYAN}Selected wallpaper: ${NC}$selected\n"
             
             # Notify success
-            notify-send -u low -i $icon "Wallpaper" "Applied: <u>$(cat ~/.config/openbox/visual-mode/eyecandy/wall-minimal)</u>"
+            notify-send -u low -i $NOTIF_WALLY_ICON "Wallpaper" "Applied: <u>$selected</u>"
         fi
     fi
-    
 else
-
-    if [[ $current == *"mechanical"* ]]; then
+    if [[ $CHK_VISMOD = *"mechanical"* ]]; then
         echo -e "${CYAN}Select wallpaper for Mechanical Theme:"
         n=0
-        for img in $dir/mechanical/*
+        for img in $WALL_DIR/*
         do
             n=$((n+1))
-            printf "${MAGENTA}[%s] ${NC}%s\n" "$n" "$img"
+            imgfilt="$(echo $img | grep -oE '[^/]+$' $1)"
+            printf "${MAGENTA}[${CYAN}%s${MAGENTA}] ${NC}%s\n" "$n" "$imgfilt"
             eval "img${n}=\$img"
         done
         
@@ -113,7 +107,8 @@ else
             exit
         fi
         
-        printf '\nEnter File Index ID (1 to %s): ' "$n"
+        printf "${CYAN}---${NC}"
+        printf "\nEnter File Index ID ${MAGENTA}[${CYAN}1${MAGENTA}] ${NC}to ${MAGENTA}[${CYAN}%s${MAGENTA}]${NC}: " "$n"
         read -n 1 -r num
         num=$(printf '%s\n' "$num" | tr -dc '[:digit:]')
         
@@ -127,20 +122,21 @@ else
             
             # Write selected
             selected="$(echo "$IMG" | awk -F'mechanical/' '{print $2}')"
-            echo "$selected" > ~/.config/openbox/visual-mode/mechanical/wall
+            echo "$selected" > $VISMOD_WALL_FILE
             
-            printf "\n${CYAN}Selected wallpaper: ${NC}$(cat ~/.config/openbox/visual-mode/eyecandy/wall)\n"
+            printf "\n${CYAN}Selected wallpaper: ${NC}$selected\n"
             
             # Notify success
-            notify-send -u low -i $icon "Wallpaper" "Applied: <u>$(cat ~/.config/openbox/visual-mode/mechanical/wall)</u>"
+            notify-send -u low -i $NOTIF_WALLY_ICON "Wallpaper" "Applied: <u>$selected</u>"
         fi
     else
         echo -e "${CYAN}Select wallpaper for Eyecandy Theme:"
         n=0
-        for img in $dir/eyecandy/*
+        for img in $WALL_DIR/*
         do
             n=$((n+1))
-            printf "${MAGENTA}[%s] ${NC}%s\n" "$n" "$img"
+            imgfilt="$(echo $img | grep -oE '[^/]+$' $1)"
+            printf "${MAGENTA}[${CYAN}%s${MAGENTA}] ${NC}%s\n" "$n" "$imgfilt"
             eval "img${n}=\$img"
         done
 
@@ -150,7 +146,8 @@ else
             exit
         fi
 
-        printf '\nEnter File Index ID (1 to %s): ' "$n"
+        printf "${CYAN}---${NC}"
+        printf "\nEnter File Index ID ${MAGENTA}[${CYAN}1${MAGENTA}] ${NC}to ${MAGENTA}[${CYAN}%s${MAGENTA}]${NC}: " "$n"
         read -n 1 -r num
         num=$(printf '%s\n' "$num" | tr -dc '[:digit:]')
 
@@ -164,13 +161,12 @@ else
             
             # Write selected
             selected="$(echo "$IMG" | awk -F'eyecandy/' '{print $2}')"
-            echo "$selected" > ~/.config/openbox/visual-mode/eyecandy/wall
+            echo "$selected" > $VISMOD_WALL_FILE
             
-            printf "\n${CYAN}Selected wallpaper: ${NC}$(cat ~/.config/openbox/visual-mode/eyecandy/wall)\n"
+            printf "\n${CYAN}Selected wallpaper: ${NC}$selected\n"
             
             # Notify success
-            notify-send -u low -i $icon "Wallpaper" "Applied: <u>$(cat ~/.config/openbox/visual-mode/eyecandy/wall)</u>"
+            notify-send -u low -i $NOTIF_WALLY_ICON "Wallpaper" "Applied: <u>$selected</u>"
         fi
     fi
-    
 fi

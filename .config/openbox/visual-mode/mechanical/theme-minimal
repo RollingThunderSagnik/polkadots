@@ -1,46 +1,33 @@
 #!/usr/bin/env bash
+source $HOME/.owl4ce_var
 
-# Mechanical Theme Setter (Minimal Mode)
-
-# Use sed for replace string on specified line
-# example:
-#
-# sed -i 's_BEFORE_AFTER_' file
-# sed -i 'LINENUMBERs_BEFORE_AFTER_' file
-#
-# can use "\" or "_" to avoid errors
-# use ".*" instead of "*"
-
-# GTK
-sed -i '5s_gtk-theme-name=.*_gtk-theme-name="Fleon"_' ~/.gtkrc-2.0
-sed -i '10s_gtk-theme-name=.*_gtk-theme-name=Fleon_' ~/.config/gtk-3.0/settings.ini
-
-# Icon
-sed -i '6s_gtk-icon-theme-name=.*_gtk-icon-theme-name="Papirus-Dark-Custom"_' ~/.gtkrc-2.0
-sed -i '8s_gtk-icon-theme-name=.*_gtk-icon-theme-name=Papirus-Dark-Custom_' ~/.config/gtk-3.0/settings.ini
-sed -i '4s\icon_theme=.*\icon_theme=Papirus-Dark-Custom\' ~/.config/qt5ct/qt5ct.conf
-
-# Openbox
-sed -i '34s_<name>.*_<name>Box-Dark</name>_' ~/.config/openbox/rc.xml
-
-# Rofi
-sed -i '5s_colorschemes/.*.rasi_colorschemes/fullscreen-dark.rasi_' ~/.config/rofi/themes/shared/settings.rasi
-sed -i '5s_colorschemes/.*.rasi_colorschemes/sidebar-dark.rasi_' ~/.config/rofi/themes/sidebar/colors.rasi
+# GTK Theme
+sed -i '5s_gtk-theme-name=.*_gtk-theme-name="Fleon"_' $GTK2_CONFIG
+sed -i '10s_gtk-theme-name=.*_gtk-theme-name=Fleon_' $GTK3_CONFIG
+sed -i '1s_Net/IconThemeName.*_Net/IconThemeName "Papirus-Dark-Custom"_' $XSETTINGSD_CONFIG
+sed -i '2s_Net/ThemeName.*_Net/ThemeName "Fleon"_' $XSETTINGSD_CONFIG
+xsettingsd &> /dev/null &
+sleep 3s && killall xsettingsd &
 
 # Set Openbox Margin
-sed -i '130s_<left>.*_<left>10</left>_' ~/.config/openbox/rc.xml
-sed -i '129s_<bottom>.*_<bottom>10</bottom>_' ~/.config/openbox/rc.xml
-sed -i '128s_<top>.*_<top>37</top>_' ~/.config/openbox/rc.xml
+bash -c "$VISMOD_DIR/margin-dunst-rofi minmod"
+openbox --reconfigure
 
-# Set Openbox Titlebar Font Size
-sed -i '50s_<size.*_<size>1</size>_' ~/.config/openbox/rc.xml
-sed -i '41s_<size>.*_<size>1</size>_' ~/.config/openbox/rc.xml
+# Icon Theme
+sed -i '6s_gtk-icon-theme-name=.*_gtk-icon-theme-name="Papirus-Dark-Custom"_' $GTK2_CONFIG
+sed -i '8s_gtk-icon-theme-name=.*_gtk-icon-theme-name=Papirus-Dark-Custom_' $GTK3_CONFIG
+sed -i '4s\icon_theme=.*\icon_theme=Papirus-Dark-Custom\' $QT5CT_CONFIG
+
+# Rofi Color Scheme
+sed -i '5s_colorschemes/.*.rasi_colorschemes/fullscreen-dark.rasi_' $ROFI_FULLSCREEN_CONFIG
+sed -i '5s_colorschemes/.*.rasi_colorschemes/sidebar-dark.rasi_' $ROFI_SIDEBAR_CONFIG
 
 # Set Openbox Button Layout
-sed -i '35s_<titleLayout>.*_<titleLayout></titleLayout>_' ~/.config/openbox/rc.xml
+sed -i '35s_<titleLayout>.*_<titleLayout>LIMC</titleLayout>_' $OB_CONFIG
 
-# Set Openbox Window Decoration
-sed -i '811s_<decor>.*_<decor>no</decor>_' ~/.config/openbox/rc.xml
+# Openbox Theme & Buttons
+cp $OB_BUTTON_DIR/$CHK_MINMOD_BUTTON/* $MECH_BUTTON_DIR
+sed -i '34s_<name>.*_<name>Fleon</name>_' $OB_CONFIG
 
-# Reconfigure Openbox
-openbox --reconfigure --restart
+# Reconfigure Openbox (realistic theme)
+sleep .4s && openbox --reconfigure &

@@ -1,36 +1,31 @@
 #!/usr/bin/env bash
-
-# Network status for panel
-# Requires Material (Icomoon) Font
-
-intwifi="wlan0"
-intether="eth0"
+source $HOME/.owl4ce_var
 
 wifi=""
-wifidisabled=""
+wifi_disabled=""
 lan=""
 
 case $1 in
     status)
-    if [[ $(iwgetid | grep 'ESSID' | awk -F'ESSID' '{print $1}') = *"$intwifi"* ]]; then
-        iwgetid | awk -F'"' '{print $2}'
-    else
-        if [[ $(ip addr | grep $intether | grep 'inet' | awk -F' ' '{print $1}') = *"inet"* ]]; then
-            echo "$(ip addr | grep $intether | grep 'inet' | awk -F'inet ' '{print $2}' | awk -F'/' '{print $1}')"
+        if [[ $(iwgetid | grep 'ESSID' | awk -F'ESSID' '{print $1}') = *"$INT_WIFI"* ]]; then
+            iwgetid | awk -F'"' '{print $2}'
         else
-            echo "Disconnected"
+            if [[ $(ip addr | grep $INT_ETH | grep 'inet' | awk -F' ' '{print $1}') = *"inet"* ]]; then
+                echo "$(ip addr | grep $INT_ETH | grep 'inet' | awk -F'inet ' '{print $2}' | awk -F'/' '{print $1}')"
+            else
+                echo "Disconnected"
+            fi
         fi
-    fi
     ;;
     icon)
-    if [[ $(iwgetid) = *"$intwifi"* ]]; then
-        echo "$wifi"
-    else
-        if [[ $(ip addr | grep $intether | grep 'inet' | awk -F' ' '{print $1}') = *"inet"* ]]; then
-            echo ""
+        if [[ $(iwgetid) = *"$INT_WIFI"* ]]; then
+            echo "$wifi"
         else
-            echo "$wifidisabled"
+            if [[ $(ip addr | grep $INT_ETH | grep 'inet' | awk -F' ' '{print $1}') = *"inet"* ]]; then
+                echo ""
+            else
+                echo "$wifi_disabled"
+            fi
         fi
-    fi
     ;;
 esac

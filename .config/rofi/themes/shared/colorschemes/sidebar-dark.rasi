@@ -1,8 +1,20 @@
 * {
-  accent:           #63c5ea;
-  background:       #3b4252;
-  background-light: #3b4252;
+  accent:           #f0f0f0;
+  background:       #101010;
+  background-light: #101010;
   foreground:       #f9f9f9;
-  on:               #2be491;
-  off:              #4c566a;
+  on:               #cf8ef4;
+  off:              #434c5e;
 }
+
+/*
+ *   * {
+ *     accent:           #63c5ea;
+ *     background:       #3b4252;
+ *     background-light: #3e4657;
+ *     foreground:       #f9f9f9;
+ *     on:               #cf8ef4;
+ *     off:              #434c5e;
+ *   }
+ * Change the colorscheme for every menu simply by editing this file...
+ */

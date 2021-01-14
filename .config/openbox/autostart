@@ -4,15 +4,14 @@
 # to run user-specific things.
 #
 # ---
+source $HOME/.owl4ce_var
 
-# Load Xresources
-xrdb ~/.Xresources
+# Start pulseaudio if not started automatically
+pulseaudio --start 
+# --log-target=syslog &
 
-# UI Appearance - Open Last Theme
-bash -c '~/.config/openbox/visual-mode/startup'
-
-# Start Tray
-bash -c '~/.config/openbox/tray' &> /dev/null
+# UI Appearance
+bash -c "$VISMOD_DIR/mode-toggle startup"
 
 # Compositor
 picom -b
@@ -23,10 +22,9 @@ lxpolkit &
 # Power Manager
 #xfce4-power-manager &
 
-# Sessions Lock (time: minute)
-ls="$(cat ~/.config/openbox/lockscreen)"
-xautolock -time 3 -locker "$ls" -detectsleep &
+# Sessions Autolock (time: minute)
+xautolock -time 5 -locker "$($DEFAPPS_EXEC -g lockscreen)" -detectsleep &
 
-# Others (e.g: mpd)
-mpd &> /dev/null
-bash -c '~/.ncmpcpp/scripts/track-change-detector' &
+# Others
+# Below will autostart mpd
+bash -c "$MPD_TCD"

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+source $HOME/.owl4ce_var
 
-rofi_command="rofi -theme themes/sidebar/three.rasi"
+rofi_command="rofi -theme themes/sidebar/three-$CHK_ROFI_MOD.rasi"
 
 # Icons
 ICON_UP=""
@@ -13,12 +14,12 @@ options="$ICON_UP\n$ICON_MUTED\n$ICON_DOWN"
 chosen="$(echo -e "$options" | $rofi_command -dmenu -selected-row 1)"
 case $chosen in
     $ICON_UP)
-        ~/.scripts/notify/change-volume up
-        ;;
+        $AVOLUME_CHANGER up
+    ;;
     $ICON_DOWN)
-        ~/.scripts/notify/change-volume down
-        ;;
+        $AVOLUME_CHANGER down
+    ;;
     $ICON_MUTED)
-        ~/.scripts/notify/change-volume mute
-        ;;
+        $AVOLUME_CHANGER mute
+    ;;
 esac

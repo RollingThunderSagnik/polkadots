@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+source $HOME/.owl4ce_var
 
-rofi_command="rofi -theme themes/sidebar/three.rasi"
+rofi_command="rofi -theme themes/sidebar/three-$CHK_ROFI_MOD.rasi"
 
 # Icons
 ICON_UP=""
@@ -13,12 +14,12 @@ options="$ICON_UP\n$ICON_OPT\n$ICON_DOWN"
 chosen="$(echo -e "$options" | $rofi_command -dmenu -selected-row 1)"
 case $chosen in
     $ICON_UP)
-        ~/.scripts/notify/change-brightness up
-        ;;
+        $BRIGHTNESS_HANDLER up
+    ;;
     $ICON_DOWN)
-        ~/.scripts/notify/change-brightness down
-        ;;
+        $BRIGHTNESS_HANDLER down
+    ;;
     $ICON_OPT)
-        ~/.scripts/notify/change-brightness optimal
-        ;;
+        $BRIGHTNESS_HANDLER optimal
+    ;;
 esac

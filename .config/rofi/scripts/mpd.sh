@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
+source $HOME/.owl4ce_var
 
-rofi_command="rofi -theme themes/sidebar/six.rasi"
+rofi_command="rofi -theme themes/sidebar/six-$CHK_ROFI_MOD.rasi"
 
 # Gets the current status of mpd (for us to parse it later on)
-status="$(mpc status)"
+status="$($MUSIC_CONTROLLER status)"
 # Defines the Play / Pause option content
-if [[ $status == *"[playing]"* ]]; then
+if [[ $status = *"laying"* ]]; then
     play_pause=""
 else
     play_pause=""
@@ -14,33 +15,25 @@ active=""
 urgent=""
 
 # Display if repeat mode is on / off
-tog_repeat=""
-if [[ $status == *"single: on"* ]]; then
+tog_repeat=""
+if [[ $status = *"single: on"* ]]; then
     active="-a 4"
-elif [[ $status == *"single: off"* ]]; then
+elif [[ $status = *"single: off"* ]]; then
     urgent="-u 4"
 else
-    tog_repeat=" Parsing error"
+    tog_repeat=""
 fi
-
-# Display if random mode is on / off
-tog_random=""
-if [[ $status == *"random: on"* ]]; then
-    [ -n "$active" ] && active+=",5" || active="-a 5"
-elif [[ $status == *"random: off"* ]]; then
-    [ -n "$urgent" ] && urgent+=",5" || urgent="-u 5"
-else
-    tog_random=" Parsing error"
-fi
+[ -n "$urgent" ] && urgent+=",5" || urgent="-u 5"
 stop=""
 next=""
 previous=""
+tog_stream=""
 
 # Variable passed to rofi
-options="$previous\n$play_pause\n$stop\n$next\n$tog_repeat\n$tog_random"
+options="$previous\n$play_pause\n$stop\n$next\n$tog_repeat\n$tog_stream"
 
 # Get the current playing song
-current=$(mpc -f %title% current)
+current="$($MUSIC_CONTROLLER title)"
 # If mpd isn't running it will return an empty string, we don't want to display that
 if [[ -z "$current" ]]; then
     current="-"
@@ -50,21 +43,21 @@ fi
 chosen="$(echo -e "$options" | $rofi_command -dmenu $active $urgent -selected-row 1)"
 case $chosen in
     $previous)
-        mpc -q prev ; ~/.ncmpcpp/scripts/notify
-        ;;
+        $MUSIC_CONTROLLER prev
+    ;;
     $play_pause)
-        mpc -q toggle
-        ;;
+        $MUSIC_CONTROLLER toggle
+    ;;
     $stop)
-        mpc -q stop ; ~/.scripts/notify/notify-send.sh -u low -i "~/.icons/gladient/music.png" -r 8888 "MPD" "Music Stopped"
-        ;;
+        $MUSIC_CONTROLLER stop
+    ;;
     $next)
-        mpc -q next ; ~/.ncmpcpp/scripts/notify
-        ;;
+        $MUSIC_CONTROLLER next
+    ;;
     $tog_repeat)
         mpc -q single
-        ;;
-    $tog_random)
-        mpc -q random
-        ;;
+    ;;
+    $tog_stream)
+        $MUSIC_CONTROLLER switchpl
+    ;;
 esac

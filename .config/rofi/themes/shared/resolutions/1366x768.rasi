@@ -1,8 +1,9 @@
 * {
   prompt-menu-font:                     "Comfortaa Bold 9";
   text-font:                            "Comfortaa Bold 12";
+  entry-icon-font:                      "Comfortaa Bold 16";
   inputbar-margin:                      4px 4px;
-  prompt-padding:                       14px 18px;
+  prompt-padding:                       14px 16px;
   entry-padding:                        16px 14px 14px 0px;
   prompt-window-height:                 300px;
   prompt-window-width:                  600px;
@@ -15,6 +16,6 @@
   list-element-margin:                  @inputbar-margin;
   list-element-border:                  0px 8px 0px 8px;
   list-8-window-padding:                120px 100px;
-  apps-textbox-prompt-colon-padding:    16px;
-  network-textbox-prompt-colon-padding: 12px 10px 8px 10px;
+  apps-textbox-prompt-colon-padding:    7px;
+  network-textbox-prompt-colon-padding: 12px 9px 8px 10px;
 }
